@@ -1,5 +1,15 @@
 # Text Evaluator — DevOps Setup
 
+Краткий DevOps-скелет для сервиса Text Evaluator (backend + frontend) с контейнеризацией и CI/CD.
+Функционал
+Docker Compose для локального запуска:
+backend (порт 8000, эндпоинт /health)
+frontend (порт 3000)
+Шаблон файла окружения — .env.example
+GitHub Actions: сборка и публикация Docker-образов
+Автодеплой по SSH на удалённый сервер
+
+
 ## Быстрый старт
 1. git clone git@github.com:Lisa086/text-evaluator-devops.git
 2. cd text-evaluator-devops
