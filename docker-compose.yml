@@ -1,19 +1,28 @@
 services:
   backend:
-    build: ./backend
+    env_file: .env
+    build:
+      context: ./backend
     image: "${BACKEND_IMAGE}:${IMAGE_TAG}"
     ports:
       - "${BACKEND_PORT}:8000"
-    env_file: .env
+    networks:
+      - text-evaluator-net
 
   frontend:
-    build: ./frontend
+    env_file: .env
+    build:
+      context: ./frontend
     image: "${FRONTEND_IMAGE}:${IMAGE_TAG}"
     ports:
       - "${FRONTEND_PORT}:80"
     environment:
-      - REACT_APP_API_URL=http://localhost:${BACKEND_PORT}
+      - REACT_APP_API_URL=http://backend:${BACKEND_PORT}
+    depends_on:
+      - backend
+    networks:
+      - text-evaluator-net
 
 networks:
-  default:
-    name: text-evaluator-net
+  text-evaluator-net:
+    driver: bridge
