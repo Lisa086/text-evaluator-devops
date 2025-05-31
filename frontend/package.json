@@ -1,0 +1,8 @@
+{
+  "name": "text-evaluator-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p build && echo '<html><body><h1>Text Evaluator</h1></body></html>' > build/index.html"
+  },
+  "dependencies": {}
+}
