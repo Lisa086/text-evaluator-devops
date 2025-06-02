@@ -9,9 +9,9 @@ permissions:
   packages: write
 
 env:
-  DOCKER_REGISTRY: ghcr.io/lisa086
-  BACKEND_IMAGE:   text-evaluator-backend
-  FRONTEND_IMAGE:  text-evaluator-frontend
+  DOCKER_REGISTRY: docker.io
+  BACKEND_IMAGE:   lisa086/text-evaluator-backend
+  FRONTEND_IMAGE:  lisa086/text-evaluator-frontend
   IMAGE_TAG:       ${{ github.sha }}
   REGISTRY_USER:   ${{ github.actor }}
   REGISTRY_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
