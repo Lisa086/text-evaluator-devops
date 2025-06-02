@@ -3,7 +3,7 @@ services:
     env_file: .env
     build:
       context: ./backend
-    image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG}"
+    image: "${BACKEND_IMAGE}:${IMAGE_TAG}"
     ports:
       - "${BACKEND_PORT}:8000"
     networks:
@@ -14,7 +14,7 @@ services:
     env_file: .env
     build:
       context: ./frontend
-    image: "${DOCKER_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG}"
+    image: "${FRONTEND_IMAGE}:${IMAGE_TAG}"
     ports:
       - "${FRONTEND_PORT}:80"
     environment:
