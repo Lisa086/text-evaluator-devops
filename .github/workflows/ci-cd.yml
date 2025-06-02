@@ -53,7 +53,7 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH with password
+      - name: Deploy via SSH (with fallback compose)
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -66,5 +66,11 @@ jobs:
             fi
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
-            docker-compose pull
-            docker-compose up -d --remove-orphans
+
+            if command -v docker-compose >/dev/null 2>&1; then
+              docker-compose pull
+              docker-compose up -d --remove-orphans
+            else
+              docker compose pull
+              docker compose up -d --remove-orphans
+            fi
