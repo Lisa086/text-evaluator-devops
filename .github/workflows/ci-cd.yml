@@ -53,13 +53,17 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
+      - name: Deploy via SSH with password
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
           script: |
+            if [ ! -d "${{ secrets.DEPLOY_PATH }}" ]; then
+              git clone https://github.com/Lisa086/text-evaluator-devops.git ${{ secrets.DEPLOY_PATH }}
+            fi
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
             docker-compose pull
