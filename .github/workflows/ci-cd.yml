@@ -9,11 +9,12 @@ permissions:
   packages: write
 
 env:
-  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-  BACKEND_IMAGE:   ${{ secrets.BACKEND_IMAGE }}
-  FRONTEND_IMAGE:  ${{ secrets.FRONTEND_IMAGE }}
+  DOCKER_REGISTRY: ghcr.io/lisa086
+  BACKEND_IMAGE:   text-evaluator-backend
+  FRONTEND_IMAGE:  text-evaluator-frontend
   IMAGE_TAG:       ${{ github.sha }}
-
+  REGISTRY_USER:   ${{ github.actor }}
+  REGISTRY_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
