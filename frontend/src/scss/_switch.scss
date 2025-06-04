@@ -1,0 +1,71 @@
+@use 'variables' as *;
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2.2rem;
+    height: 1.4rem;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid $red-button;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 0.6rem;
+    width: 0.6rem;
+    left: 0.2rem;
+    bottom: 0.3rem;
+    background-color: $red-button;
+    -webkit-transition: .4s;
+    transition: .4s;
+    transform: scale(1.000000005);
+}
+
+.slider:hover:before {
+    transform: scale(1.2) translateX(1px);
+    // transform-origin: 50% 61%;
+    box-shadow: 0 0 0 5px rgb($red-button, 0.2);
+}
+
+input:checked+.slider {
+    border: 1px solid $text-field-light;
+}
+
+input:checked+.slider::before {
+    background-color: $text-field-light;
+}
+
+input:checked+.slider:before {
+    transform: translateX(1rem) scale(1.000000005);
+}
+
+input:checked+.slider:hover:before {
+    transform: scale(1.2) translateX(calc(1rem - 3px));
+    // transform-origin: 240% 61%;
+    box-shadow: 0 0 0 5px rgb($text-field-light, 0.2);
+}
+
+.slider.round {
+    border-radius: 4.2rem;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

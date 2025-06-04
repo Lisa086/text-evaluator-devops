@@ -1,0 +1,96 @@
+@use 'variables' as *;
+
+.dark-theme {
+    --border-color: #{$border-dark};
+    --dnd: #{$dnd-dark};
+}
+
+// Глобальные стили
+body.dark-theme {
+    .heading-1 {
+        color: $text-field-light;
+    }
+
+    .subtitle-2 {
+        color: $loading-bar;
+    }
+
+    textarea::placeholder {
+        color: $transparency-main-text-dark;
+    }
+
+    .body-1 {
+        color: $text-field-light;
+    }
+
+    .result-text {
+        color: $text-field-light;
+    }
+
+    .result-title {
+        color: $transparency-main-text-dark;
+    }
+}
+
+// Локальные стили
+body.dark-theme {
+    background-color: $background-dark;
+
+    .header {
+        &__logo {
+            .light {
+                display: none;
+            }
+
+            .black {
+                display: block;
+            }
+        }
+
+        &__theme {
+            .sun {
+                display: none;
+            }
+
+            .moon {
+                display: block;
+            }
+        }
+
+        &__theme-text {
+            color: $background-light;
+        }
+    }
+
+    .uploader {
+        &__input-data {
+            textarea {
+                background-color: $background-dark;
+            }
+        }
+
+        &__copy path {
+            fill: $loading-bar;
+        }
+
+        &__box-info {
+            border: 1px solid $loading-bar;
+
+            .light {
+                display: none;
+            }
+
+            .dark {
+                display: block;
+            }
+        }
+    }
+
+    .uploader.loadingFile {
+        background-color: var(--dnd);
+
+        textarea {
+            background-color: var(--dnd);
+        }
+    }
+}

@@ -1,0 +1,110 @@
+@use 'variables' as *;
+
+html {
+    font-family: $main-font;
+    font-size: $global-scale;
+}
+
+:root {
+    --border-color: #{$border-light};
+    --dnd: #{$dnd};
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+.heading-1 {
+    font-size: $heading-1;
+    font-weight: $heading-1-weight;
+    line-height: $heading-1-line-height;
+}
+
+.subtitle-1 {
+    font-size: $subtitle-1;
+    font-weight: $subtitle-1-weight;
+    line-height: $subtitle-1-line-height;
+}
+
+.subtitle-2 {
+    font-size: $subtitle-2;
+    font-weight: $subtitle-2-weight;
+    line-height: $subtitle-2-line-height;
+    color: $transparency-main-text-light;
+}
+
+// Не используется
+.subtitle-3 {
+    font-size: $subtitle-3;
+    font-weight: $subtitle-3-weight;
+    line-height: $subtitle-3-line-height;
+    color: #fff;
+}
+
+.body-1 {
+    font-size: $body-1;
+    font-weight: $body-1-weight;
+    line-height: $body-1-line-height;
+    color: $black-text;
+}
+
+textarea::placeholder {
+    color: $transparency-main-text-light;
+}
+
+textarea::placeholder {
+    color: $transparency-main-text-light;
+}
+
+.caption {
+    font-size: $caption;
+    font-weight: $caption-weight;
+    line-height: $caption-line-height;
+}
+
+.result-text {
+    font-size: 2.4rem;
+    font-weight: bold;
+    line-height: 1.6rem;
+    color: $black-text;
+}
+
+.result-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    line-height: 1.6rem;
+    color: $text-field-dark;
+}
+
+b {
+    font-weight: bold;
+}
+
+textarea {
+    font-family: $main-font;
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+@mixin button($padding) {
+    background-color: $red-button;
+    color: $text-field-light;
+    border: none;
+    border-radius: 1.4rem;
+    cursor: pointer;
+    padding: $padding;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $hovering-red-button;
+    }
+}
+
+.button1 {
+    @include button(1.7rem);
+}
+
+.button2 {
+    @include button(1.4rem);
+}
