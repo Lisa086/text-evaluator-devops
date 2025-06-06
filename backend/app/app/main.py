@@ -1,10 +1,18 @@
-﻿from fastapi import FastAPI
+﻿import logging
+import logging.config
+import uuid
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.api import documents, analysis, readabilityAPI
 from app.database.database import Base, engine
 from app.core.config import settings
 import os
+from app.logging.config import LOGGING_CONFIG
+from app.logging.context import set_log_context
+from app.logging.context_filter import RequestContextFilter
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,6 +41,35 @@ app.add_middleware(
 )
 
 os.makedirs("temp", exist_ok=True)
+os.makedirs("logs", exist_ok=True)
+logging.config.dictConfig(LOGGING_CONFIG)
+logger = logging.getLogger("app")
+logger.addFilter(RequestContextFilter())
+
+@app.middleware("http")
+async def log_context_middleware(request: Request, call_next):
+    trace_id = request.headers.get("X-Trace-ID") or str(uuid.uuid4())
+    set_log_context(
+        client_ip=request.client.host if request.client else "unknown",
+        method=request.method,
+        path=request.url.path,
+        trace_id=trace_id
+    )
+    logger.debug("Начало обработки запроса")
+    response = await call_next(request)
+    response.headers["X-Trace-ID"] = trace_id
+    logger.debug("Конец обработки запроса")
+    return response
+
+@app.exception_handler(HTTPException)
+async def log_http_exception(request: Request, exc: HTTPException):
+    logger.debug(f"({exc.status_code}) {exc.detail}")
+    return await http_exception_handler(request, exc)
+
+@app.exception_handler(RequestValidationError)
+async def log_validation_error(request: Request, exc: RequestValidationError):
+    logger.debug(f"{exc.errors()}")
+    return await request_validation_exception_handler(request, exc)
 
 app.include_router(documents.router, prefix=f"{settings.API_PREFIX}/documents", tags=["documents"])
 app.include_router(analysis.router, prefix=f"{settings.API_PREFIX}/analysis", tags=["analysis"])
